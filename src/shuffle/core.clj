@@ -42,7 +42,7 @@
 ;; DEMO badness
 (println "=============")
 (doseq [_ (range 1)]
-  (demo naive-shuffle items-3 1000000))
+  (demo naive-shuffle items-3 10000))
 (doseq [_ (range 1)]
   (demo naive-shuffle cards-52 5200))
 

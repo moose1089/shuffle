@@ -24,7 +24,6 @@
                   j (get cards i))
            (inc i)))))))
 
-
 (naive-shuffle items-4)
 
 (naive-shuffle cards-52)
@@ -32,9 +31,11 @@
 (defn demo
   "Print how often an item is is 0th position"
   [shuffle-f items x]
-  (println (into (sorted-map)
-                 (frequencies (for [_ (range x)]
-                                (get (shuffle-f items) 0))))))
+  (println
+   (map (fn [[k v]] (format "%s occurs %d, (%2.1f%%)\n" k v (* 100.0 (/ v x))))
+        (into (sorted-map)
+              (frequencies (for [_ (range x)]
+                             (get (shuffle-f items) 0)))))))
 
 
 ;; DEMO badness
@@ -62,6 +63,7 @@
 ;; use this (java implementation)
 (shuffle cards-52)
 
+;; or this
 (good-shuffle cards-52)
 
 (good-shuffle items-4)
@@ -75,6 +77,4 @@
   (demo good-shuffle cards-52 52000))
 
 (defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+  [& args])

@@ -1,10 +1,17 @@
 (ns shuffle.core
   (:gen-class))
 
+;; n items = n! = n*(n-1)*(n-2)...1
+;; 1! = 1
+;; 3! = 6
+;; 4! = 24
+
 (def cards-52
   (for [suit ["S" "H" "D" "C"]
         card [2 3 4 5 6 7 8 9 "T" "J" "Q" "K" "A"]]
     (str card suit)))
+
+(prn cards-52)
 
 (def items-3 [1 2 3])
 (def items-4 [1 2 3 4])
@@ -42,14 +49,14 @@
 ;; DEMO badness
 (println "=============")
 (doseq [_ (range 1)]
-  (demo naive-shuffle items-3 10000))
+  (demo naive-shuffle items-3 100000))
 (doseq [_ (range 1)]
   (demo naive-shuffle cards-52 5200))
 
 ;; But why is it bad? Naive shuffle produces "n to the power n" non distinct
 ;; arrangements with equal probability e.g. for 3 items this is 27 arrangements.
 
-;; The actual number of distinct arrangements of 3 items is 3! = 6, but
+;; The actual number of distinct arrangements of 3 items is 3! = 3*2*1 = 6, but
 ;; 27 / 6 = 4 rem 3. i.e. no matter how the arrangements fall into the 6 distinct
 ;; arrangements, it is not possible for these to form a probablity of 1/6, because
 ;; 6 is not a factor of 27.
@@ -92,10 +99,10 @@
 ;; DEMO goodness
 (doseq [i (range 1)]
   (demo shuffle items-3 1000))
-(doseq [i (range 10)]
-  (demo good-shuffle items-4 1000))
 (doseq [i (range 1)]
-  (demo good-shuffle cards-52 5200))
+  (demo good-shuffle items-3 100000))
+(doseq [i (range 1)]
+  (demo good-shuffle cards-52 52000))
 
 (defn -main
   [& args])

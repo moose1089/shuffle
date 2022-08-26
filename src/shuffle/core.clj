@@ -13,7 +13,7 @@
   "This is an example of what not to do -- use Fisher-Yates instead."
   [cards-to-shuffle]
   (let [n (count cards-to-shuffle)]
-    (loop [cards (vec cards-to-shuffle)
+    (loop [cards (vec cards-to-shuffle) ;; convert to vector for get
            i     0] ;; for every position
       (if (= i n)
         cards
@@ -55,23 +55,24 @@
 ;; 6 is not a factor of 27.
 ;;
 ;; In this case,
-;; [1, 2, 3] occurs 4/27 times != 1/6
-;; [3, 1, 2] occurs 4/27 times != 1/6
-;; [3, 2, 1] occurs 4/27 times != 1/6
-;; [2, 1, 3] occurs 5/27 times != 1/6
-;; [2, 3, 1] occurs 5/27 times != 1/6
-;; [1, 3, 2] occurs 5/27 times != 1/6
+;; [1, 2, 3] occurs 4/27 times ≠ 1/6
+;; [3, 1, 2] occurs 4/27 times ≠ 1/6
+;; [3, 2, 1] occurs 4/27 times ≠ 1/6
+;; [2, 1, 3] occurs 5/27 times ≠ 1/6
+;; [2, 3, 1] occurs 5/27 times ≠ 1/6
+;; [1, 3, 2] occurs 5/27 times ≠ 1/6
 
 
 (defn good-shuffle ;; Fisher Yates as per Knuth
   [cards-to-shuffle]
   (let [cards-to-shuffle (vec cards-to-shuffle) ;; convert to vector for get
         n                (count cards-to-shuffle)]
-    (loop [i     (dec n)
-           cards cards-to-shuffle]    ;; 1 ≤ i ≤ n-1
+    (loop [i     (dec n)             ;; 1 ≤ i ≤ n-1
+           cards cards-to-shuffle]
       (if (= i 0)
         cards
         (let [j (rand-int (inc i))]   ;; 0 ≤ j ≤ i
+          ;(prn "swapping positions" i j)
           (recur (dec i)
                  (assoc cards
                         i (get cards j) ;; swap i,j positions
@@ -90,7 +91,7 @@
 
 ;; DEMO goodness
 (doseq [i (range 1)]
-  (demo shuffle items-4 1000))
+  (demo shuffle items-3 1000))
 (doseq [i (range 10)]
   (demo good-shuffle items-4 1000))
 (doseq [i (range 1)]
